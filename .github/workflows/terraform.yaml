@@ -34,6 +34,11 @@ on:
         description: Apply Terraform Plan
         required: false
         default: 'false'
+      list_state:
+        type: string
+        description: List Terraform State
+        required: false
+        default: 'false'
     secrets:
       mastertoken:
       arm_client_id:
@@ -100,6 +105,7 @@ jobs:
       - name: Terraform State List
         run: terraform state list
         working-directory: "${{ github.event.repository.name }}/${{ inputs.directory }}"
+        if: ${{ inputs.list_state == 'true' }}
       - name: Terraform Plan (Deploy Mode)
         run: terraform plan -out=tfplan
         if: inputs.mode == 'deploy'
@@ -172,3 +178,4 @@ jobs:
       - name: Terraform State List (Post Apply)
         run: terraform state list
         working-directory: "${{ github.event.repository.name }}/${{ inputs.directory }}"
+        if: ${{ inputs.list_state == 'true' }}
