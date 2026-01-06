@@ -105,6 +105,9 @@ jobs:
         run: terraform plan -out=tfplan -destroy
         if: inputs.mode == 'destroy'
         working-directory: "${{ github.event.repository.name }}/${{ inputs.directory }}"
+      - name: Terraform Plan Summary
+        run: terraform show -json tfplan | tf-summarize
+        working-directory: "${{ github.event.repository.name }}/${{ inputs.directory }}"
       - name: Upload Plan for Apply
         uses: actions/upload-artifact@v4
         with:
