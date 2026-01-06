@@ -83,6 +83,10 @@ jobs:
           -t ${{ secrets.ARM_TENANT_ID }} \
           -u ${{secrets.ARM_CLIENT_ID}} \
           -p ${{ secrets.ARM_CLIENT_SECRET }} \
+      - name: Install tf-summarize
+        run: |
+          wget https://github.com/dineshba/tf-summarize/releases/download/v0.3.14/tf-summarize_0.3.14_linux_amd64.deb
+          && sudo dpkg -i tf-summarize_0.3.14_linux_amd64.deb
       - name: Terraform Init
         run: |
           terraform init \
