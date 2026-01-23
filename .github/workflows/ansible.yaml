@@ -24,6 +24,16 @@ on:
         description: Checkout ansible-vault repository
         default: 'true'
         required: false
+      checkout_inventory:
+        type: string
+        description: Checkout ansible-inventory repository
+        default: 'true'
+        required: false
+      checkout_roles:
+        type: string
+        description: Checkout ansible-inventory repository
+        default: 'true'
+        required: false
       azure_login:
         type: string
         description: Azure Login Required
@@ -53,14 +63,23 @@ jobs:
         with:
           path: "${{ github.event.repository.name }}"
 
-      - name: Checkout Repository (ansible-core)
+      # - name: Checkout Repository (ansible-core)
+      #   uses: actions/checkout@v4
+      #   with:
+      #     path: ansible-core
+      #     token: ${{secrets.mastertoken}}
+      #     ref: 'main'
+      #     repository: 'epichouse/ansible-core'
+      #   if: ${{ github.event.repository.name != 'ansible-core' }}
+
+      - name: Checkout Repository (ansible-inventory)
         uses: actions/checkout@v4
         with:
-          path: ansible-core
+          path: ansible-inventory
           token: ${{secrets.mastertoken}}
           ref: 'main'
-          repository: 'epichouse/ansible-core'
-        if: ${{ github.event.repository.name != 'ansible-core' }}
+          repository: 'epichouse/ansible-inventory'
+        if: ${{ inputs.checkout_inventory == 'true' }}
 
       - name: Checkout Repository (ansible-vault)
         uses: actions/checkout@v4
@@ -78,6 +97,7 @@ jobs:
           token: ${{secrets.mastertoken}}
           ref: 'main'
           repository: 'epichouse/ansible-roles'
+        if: ${{ inputs.checkout_roles == 'true' }}
 
       - name: Azure Login
         run: |
