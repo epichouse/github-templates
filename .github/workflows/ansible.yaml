@@ -27,7 +27,7 @@ on:
       checkout_inventory:
         type: string
         description: Checkout ansible-inventory repository
-        default: 'true'
+        default: 'false'
         required: false
       checkout_roles:
         type: string
