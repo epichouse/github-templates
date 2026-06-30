@@ -23,12 +23,12 @@ on:
         default: 'false'
         required: false
     secrets:
-      sudo_password:  
-      mastertoken:
-      vault_password:
+      gh_pat_token:
       arm_client_id:
       arm_client_secret:
       arm_tenant_id:
+      bw_access_token:
+      bw_organization_id:
 jobs:
   multisite:
     uses: ./.github/workflows/ansible-playbook.multisite.yaml
@@ -38,12 +38,12 @@ jobs:
       ansible_additional_parameters: ${{ inputs.ansible_additional_parameters }}
       ansible_verbose_logging: ${{inputs.ansible_verbose_logging}}
     secrets:
-      sudo_password: ${{ secrets.sudo_password }}
-      mastertoken: ${{ secrets.mastertoken }}
-      vault_password: ${{ secrets.vault_password }}
+      gh_pat_token: ${{ secrets.gh_pat_token }}
       arm_client_id: ${{ secrets.arm_client_id }}
       arm_client_secret: ${{ secrets.arm_client_secret }}
       arm_tenant_id: ${{ secrets.arm_tenant_id }}
+      bw_access_token: ${{ secrets.bw_access_token }}
+      bw_organization_id: ${{ secrets.bw_organization_id }}
   singlesite:
     uses: ./.github/workflows/ansible-playbook.singlesite.yaml
     if: inputs.multisite == false
@@ -53,9 +53,9 @@ jobs:
       ansible_additional_parameters: ${{ inputs.ansible_additional_parameters }}
       ansible_verbose_logging: ${{inputs.ansible_verbose_logging}}
     secrets:
-      sudo_password: ${{ secrets.sudo_password }}
-      mastertoken: ${{ secrets.mastertoken }}
-      vault_password: ${{ secrets.vault_password }}
+      gh_pat_token: ${{ secrets.gh_pat_token }}
       arm_client_id: ${{ secrets.arm_client_id }}
       arm_client_secret: ${{ secrets.arm_client_secret }}
       arm_tenant_id: ${{ secrets.arm_tenant_id }}
+      bw_access_token: ${{ secrets.bw_access_token }}
+      bw_organization_id: ${{ secrets.bw_organization_id }}

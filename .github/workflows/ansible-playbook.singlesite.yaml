@@ -18,12 +18,12 @@ on:
           description: Enable or disable verbose logging
           required: false
       secrets:
-        sudo_password:  
-        mastertoken:
-        vault_password:
+        gh_pat_token:
         arm_client_id:
         arm_client_secret:
         arm_tenant_id:
+        bw_access_token:
+        bw_organization_id:
 jobs:
   london:
     runs-on: "${{ inputs.site }}"
@@ -33,6 +33,8 @@ jobs:
         working-directory: "${{ github.event.repository.name }}"
     env:
       verbose_logs: ""
+      BW_ACCESS_TOKEN: ${{ secrets.bw_access_token }}
+      BW_ORGANIZATION_ID: ${{ secrets.bw_organization_id }}
     steps:
       - name: Checkout Repository (${{ github.event.repository.name }})
         uses: actions/checkout@v4
@@ -42,34 +44,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: ansible-core
-          token: ${{secrets.mastertoken}}
+          token: ${{secrets.gh_pat_token}}
           ref: 'main'
           repository: 'epichouse/ansible-core'
         if: ${{ github.event.repository.name != 'ansible-core' }}
-      - name: Checkout Repository (ansible-vault)
-        uses: actions/checkout@v4
-        with:
-          path: ansible-vault
-          token: ${{secrets.mastertoken}}
-          ref: 'main'
-          repository: 'epichouse/ansible-vault'
       - name: Checkout Repository (ansible-roles)
         uses: actions/checkout@v4
         with:
           path: ansible-roles
-          token: ${{secrets.mastertoken}}
+          token: ${{secrets.gh_pat_token}}
           ref: 'main'
           repository: 'epichouse/ansible-roles'
-      - name: Populate Vault Password File
-        run: echo $PASS > ~/.vault
-        shell: bash
-        env:
-          PASS: ${{ secrets.VAULT_PASSWORD }}
       - name: Set Verbosity
         run: echo "verbose_logs=-vvv" >> $GITHUB_ENV
         if: ${{ inputs.ansible_verbose_logging  == 'true' }}
       - name: Run Playbook
-        run: ansible-playbook ${{ inputs.ansible_playbook }} ${{ inputs.ansible_additional_parameters }} ${{ env.verbose_logs}} --extra-vars "ansible_sudo_pass=${{ secrets.SUDO_PASSWORD }}"
-      - name: Cleanup Vault Password File
-        run: rm ~/.vault
-        if: always()
+        run: ansible-playbook ${{ inputs.ansible_playbook }} ${{ inputs.ansible_additional_parameters }} ${{ env.verbose_logs}}
