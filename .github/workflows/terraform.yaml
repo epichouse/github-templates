@@ -47,6 +47,7 @@ on:
       arm_tenant_id:
       ansible_vault_password:
       bws:
+      bwsorg:
 
 jobs:
   plan:
@@ -59,6 +60,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       BWS_ACCESS_TOKEN: ${{ secrets.bws }}
+      BW_ORGANIZATION_ID: ${{ secrets.bwsorg }}
     steps:
       - name: Mode Check
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
@@ -137,6 +139,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       BWS_ACCESS_TOKEN: ${{ secrets.bws }}
+      BW_ORGANIZATION_ID: ${{ secrets.bwsorg }}
     steps:
       - name: Mode Check
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
