@@ -40,14 +40,13 @@ on:
         required: false
         default: 'false'
     secrets:
-      mastertoken:
+      gh_pat_token:
       arm_client_id:
       arm_client_secret:
       arm_subscription_id:
       arm_tenant_id:
-      ansible_vault_password:
-      bws:
-      bwsorg:
+      bw_access_token:
+      bw_organization_id:
 
 jobs:
   plan:
@@ -59,8 +58,8 @@ jobs:
     env:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      BW_ACCESS_TOKEN: ${{ secrets.bws }}
-      BW_ORGANIZATION_ID: ${{ secrets.bwsorg }}
+      BW_ACCESS_TOKEN: ${{ secrets.bw_access_token }}
+      BW_ORGANIZATION_ID: ${{ secrets.bw_organization_id }}
     steps:
       - name: Mode Check
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
@@ -70,19 +69,6 @@ jobs:
         with:
           path: "${{ github.event.repository.name }}"
 
-      - name: Checkout Repository (ansible-vault)
-        uses: actions/checkout@v5
-        with:
-          path: 'ansible-vault'
-          token: '${{ secrets.mastertoken }}'
-          ref: 'main'
-          repository: 'epichouse/ansible-vault'
-
-      - name: Populate Vault Password File
-        run: echo $PASS > ~/.vault
-        shell: bash
-        env:
-          PASS: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Azure Login
@@ -138,8 +124,8 @@ jobs:
     env:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      BW_ACCESS_TOKEN: ${{ secrets.bws }}
-      BW_ORGANIZATION_ID: ${{ secrets.bwsorg }}
+      BW_ACCESS_TOKEN: ${{ secrets.bw_access_token }}
+      BW_ORGANIZATION_ID: ${{ secrets.bw_organization_id }}
     steps:
       - name: Mode Check
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
@@ -148,11 +134,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: "${{ github.event.repository.name }}"
-      - name: Populate Vault Password File
-        run: echo $PASS > ~/.vault
-        shell: bash
-        env:
-          PASS: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Download Plan
