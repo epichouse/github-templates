@@ -65,7 +65,7 @@ jobs:
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
         if: ${{ inputs.mode == 'destroy'}}
       - name: Checkout Repository (${{ github.event.repository.name }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: "${{ github.event.repository.name }}"
 
@@ -108,7 +108,7 @@ jobs:
         run: terraform show -json tfplan | tf-summarize
         working-directory: "${{ github.event.repository.name }}/${{ inputs.directory }}"
       - name: Upload Plan for Apply
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tfplan-${{ inputs.mode}}
           path: ${{ github.event.repository.name }}/${{ inputs.directory }}/tfplan
@@ -131,13 +131,13 @@ jobs:
         run: echo "::warning title=WORKFLOW RUNNING IN DESTRUCTIVE MODE::Warning this workflow is running in destructive mode"
         if: ${{ inputs.mode == 'destroy'}}
       - name: Checkout Repository (${{ github.event.repository.name }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: "${{ github.event.repository.name }}"
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
       - name: Download Plan
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: tfplan-${{ inputs.mode}}
           path: ${{ github.event.repository.name }}/${{ inputs.directory }}/

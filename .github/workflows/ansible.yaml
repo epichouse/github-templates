@@ -59,12 +59,12 @@ jobs:
       verbose_logs: ""
     steps:
       - name: Checkout Repository (${{ github.event.repository.name }})
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: "${{ github.event.repository.name }}"
 
       # - name: Checkout Repository (ansible-core)
-      #   uses: actions/checkout@v4
+      #   uses: actions/checkout@v7
       #   with:
       #     path: ansible-core
       #     token: ${{secrets.mastertoken}}
@@ -73,7 +73,7 @@ jobs:
       #   if: ${{ github.event.repository.name != 'ansible-core' }}
 
       - name: Checkout Repository (ansible-inventory)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: ansible-inventory
           token: ${{secrets.mastertoken}}
@@ -82,7 +82,7 @@ jobs:
         if: ${{ inputs.checkout_inventory == 'true' }}
 
       - name: Checkout Repository (ansible-vault)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: ansible-vault
           token: ${{secrets.mastertoken}}
@@ -91,7 +91,7 @@ jobs:
         if: ${{ inputs.checkout_vault == 'true' }}
 
       - name: Checkout Repository (ansible-roles)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: ansible-roles
           token: ${{secrets.mastertoken}}
