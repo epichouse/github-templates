@@ -41,8 +41,8 @@ on:
         required: false
     secrets:
       gh_pat_token:
-      ansible_vault_password:
-        required: true
+      bw_access_token:
+      bw_organization_id:
       arm_client_id:
         required: false
       arm_client_secret:
