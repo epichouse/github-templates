@@ -12,6 +12,7 @@ on:
       build_path:
         required: true
         type: string
+
 jobs:
   build:
     runs-on: london
