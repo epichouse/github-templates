@@ -66,7 +66,7 @@ jobs:
       - name: Checkout Repository (core-config)
         uses: actions/checkout@v7
         with:
-          path: ansible-core
+          path: core-config
           token: ${{secrets.gh_pat_token}}
           ref: 'main'
           repository: 'epichouse/core-config'
