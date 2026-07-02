@@ -95,13 +95,6 @@ jobs:
           echo "verbose_logs=-vvv" >> $GITHUB_ENV
         if: ${{ inputs.ansible_verbose_logging  == 'true' }}
 
-      - name: Generate Vault Password File
-        run: |
-          echo $PASS > ~/.vault
-        shell: bash
-        env:
-          PASS: ${{ secrets.ansible_vault_password }}
-
       - name: Output Ansible Inventory
         run: |
           ansible-inventory --graph
