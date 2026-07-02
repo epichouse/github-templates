@@ -12,10 +12,13 @@ on:
       build_path:
         required: true
         type: string
-
+      runs-on:
+        type: string
+        description: Site used for job execution on non multisite jobs
+        default: 'ldn'
 jobs:
   build:
-    runs-on: london
+    runs-on: "${{ inputs.runs-on }}"
     permissions:
       contents: read
       packages: write

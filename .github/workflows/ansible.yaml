@@ -18,7 +18,7 @@ on:
       runs-on:
         type: string
         description: Site used for job execution on non multisite jobs
-        default: 'london'
+        default: 'ldn'
       checkout_vault:
         type: string
         description: Checkout ansible-vault repository
