@@ -104,7 +104,3 @@ jobs:
           ansible-playbook ${{ github.workspace }}/${{ github.event.repository.name }}/${{ inputs.ansible_playbook }} \
           ${{ inputs.ansible_additional_parameters }} \
           ${{ env.verbose_logs}} \
-
-      - name: Cleanup Vault Password File
-        run: rm ~/.vault
-        if: always()
