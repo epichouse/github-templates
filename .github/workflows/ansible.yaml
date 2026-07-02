@@ -40,7 +40,7 @@ on:
         default: 'false'
         required: false
     secrets:
-      mastertoken:
+      gh_pat_token:
       ansible_vault_password:
         required: true
       arm_client_id:
@@ -63,38 +63,20 @@ jobs:
         with:
           path: "${{ github.event.repository.name }}"
 
-      # - name: Checkout Repository (ansible-core)
-      #   uses: actions/checkout@v7
-      #   with:
-      #     path: ansible-core
-      #     token: ${{secrets.mastertoken}}
-      #     ref: 'main'
-      #     repository: 'epichouse/ansible-core'
-      #   if: ${{ github.event.repository.name != 'ansible-core' }}
-
-      - name: Checkout Repository (ansible-inventory)
+      - name: Checkout Repository (core-config)
         uses: actions/checkout@v7
         with:
-          path: ansible-inventory
-          token: ${{secrets.mastertoken}}
+          path: ansible-core
+          token: ${{secrets.gh_pat_token}}
           ref: 'main'
-          repository: 'epichouse/ansible-inventory'
-        if: ${{ inputs.checkout_inventory == 'true' }}
-
-      - name: Checkout Repository (ansible-vault)
-        uses: actions/checkout@v7
-        with:
-          path: ansible-vault
-          token: ${{secrets.mastertoken}}
-          ref: 'main'
-          repository: 'epichouse/ansible-vault'
-        if: ${{ inputs.checkout_vault == 'true' }}
+          repository: 'epichouse/core'
+        if: ${{ github.event.repository.name != 'core-config' }}
 
       - name: Checkout Repository (ansible-roles)
         uses: actions/checkout@v7
         with:
           path: ansible-roles
-          token: ${{secrets.mastertoken}}
+          token: ${{secrets.gh_pat_token}}
           ref: 'main'
           repository: 'epichouse/ansible-roles'
         if: ${{ inputs.checkout_roles == 'true' }}
