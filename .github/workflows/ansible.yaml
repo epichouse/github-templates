@@ -69,7 +69,7 @@ jobs:
           path: ansible-core
           token: ${{secrets.gh_pat_token}}
           ref: 'main'
-          repository: 'epichouse/core'
+          repository: 'epichouse/core-config'
         if: ${{ github.event.repository.name != 'core-config' }}
 
       - name: Checkout Repository (ansible-roles)
