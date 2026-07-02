@@ -42,7 +42,6 @@ on:
     secrets:
       gh_pat_token:
       bw_access_token:
-      bw_organization_id:
       arm_client_id:
         required: false
       arm_client_secret:
@@ -57,6 +56,7 @@ jobs:
         working-directory: "core-config"
     env:
       verbose_logs: ""
+      BWS_ACCESS_TOKEN: ${{ secrets.bw_access_token }}
     steps:
       - name: Checkout Repository (${{ github.event.repository.name }})
         uses: actions/checkout@v7
