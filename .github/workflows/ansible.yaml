@@ -54,7 +54,7 @@ jobs:
     runs-on: "${{ inputs.runs-on }}"
     defaults:
       run:
-        working-directory: "${{ github.event.repository.name }}"
+        working-directory: "core-config"
     env:
       verbose_logs: ""
     steps:
