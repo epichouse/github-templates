@@ -54,7 +54,7 @@ jobs:
     runs-on: "${{ inputs.runs-on }}"
     defaults:
       run:
-        working-directory: "core-config"
+        working-directory: "${{ github.workspace }}/core-config"
     env:
       verbose_logs: ""
     steps:
@@ -101,7 +101,7 @@ jobs:
 
       - name: Run Playbook
         run: |
-          ansible-playbook ${{ inputs.ansible_playbook }} \
+          ansible-playbook ${{ github.workspace }}/${{ github.event.repository.name }}/${{ inputs.ansible_playbook }} \
           ${{ inputs.ansible_additional_parameters }} \
           ${{ env.verbose_logs}} \
 
